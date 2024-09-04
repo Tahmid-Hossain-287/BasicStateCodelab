@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -18,33 +19,16 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun WaterCounter(modifier: Modifier = Modifier) {
-    var count by rememberSaveable { mutableStateOf( 0 )}
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
-    ) {
-        Text(
-            text = "You've had $count glasses of water.",
-            modifier = modifier.padding(16.dp)
-        )
-        Row(
-            modifier = modifier,
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Button(
-                onClick = { count++ },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text("Add glass")
-            }
-            Button(
-                onClick = { count-- },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text("Subtract glass")
-            }
+    Column(modifier = modifier.padding(16.dp)) {
+        var count by remember { mutableStateOf(0) }
+
+        if (count > 0) {
+            // This text is present if the button has been clicked
+            // at least once; absent otherwise
+            Text("You've had $count glasses.")
+        }
+        Button(onClick = { count++ }, Modifier.padding(top = 8.dp)) {
+            Text("Add one")
         }
     }
 }
