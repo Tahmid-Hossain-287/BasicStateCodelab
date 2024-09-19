@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun WaterCounter(modifier: Modifier = Modifier) {
     var count by rememberSaveable { mutableStateOf( 0 )}
+    var showTask by rememberSaveable { mutableStateOf(false) }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -35,7 +36,8 @@ fun WaterCounter(modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = { count++ },
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                enabled = (count < 10)
             ) {
                 Text("Add glass")
             }
@@ -45,6 +47,19 @@ fun WaterCounter(modifier: Modifier = Modifier) {
             ) {
                 Text("Subtract glass")
             }
+            if (count >= 10) {
+                showTask = true
+            }
+        }
+        if (showTask) {
+            WellnessTaskItem(
+                taskName = "Go workout",
+                onClose = {
+                    showTask = false
+                    count = 0
+                },
+                modifier
+            )
         }
     }
 }
