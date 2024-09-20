@@ -1,5 +1,6 @@
 package com.example.basicstatecodelab
 
+import WaterCounter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
